@@ -1,10 +1,11 @@
 {
   "name": "base-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Base API",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/williamgurzoni/base-api/issues"
   },
-  "homepage": "https://github.com/williamgurzoni/base-api#readme"
+  "homepage": "https://github.com/williamgurzoni/base-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.12",
+    "require-dir": "^1.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
 }
