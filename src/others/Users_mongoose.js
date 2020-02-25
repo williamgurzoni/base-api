@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate");
 
 const UserSchema = new mongoose.Schema({
   createdAt: {
@@ -11,12 +12,16 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   email: {
     type: String,
+    unique: true,
     required: true
   }
 });
+
+UserSchema.plugin(mongoosePaginate);
 
 mongoose.model("User", UserSchema);

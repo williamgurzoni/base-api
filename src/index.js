@@ -1,25 +1,34 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const cors = require("cors");
 const requireDir = require("require-dir");
+require("dotenv").config();
 
-// Inicializa App
+const auth = require("./middleware/auth");
+const sequelize = require("./config/db");
+
 const app = express();
+app.use(express.json());
+app.use(cors());
+app.use(auth);
 
-// Define porta (local/server)
-const port = process.env.PORT || 3001;
-const urlMongo =
-  "mongodb+srv://base-api:Pq1uNexDxDKTHtUq@cluster0-opd3r.mongodb.net/test?retryWrites=true&w=majority";
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch(err => {
+    console.error("Unable to connect to the database:", err);
+  });
 
-// Inicializa DB
-mongoose.connect(urlMongo, { useNewUrlParser: true, useUnifiedTopology: true });
-// user base-api
-// pass Pq1uNexDxDKTHtUq
-
-// Resgata models
+// Models
 requireDir("./models");
 
-app.get("/", (req, res) => {
-  res.send("test");
-});
+// Sync database structure
+// sequelize.sync({ force: false });
 
-app.listen(port);
+// Routes
+app.use("/api", require("./routes"));
+
+// app.use("/api", (req, res) => console.log('----', req.body));
+
+app.listen(process.env.PORT);
